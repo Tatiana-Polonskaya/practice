@@ -7,14 +7,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import tempfile
 import uuid
-
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 import time
 from pathlib import Path
 import json
 from starlette import status
 from starlette.responses import Response
 
-app = FastAPI()
+
 
 origins = [
     "http://localhost",
@@ -25,14 +26,27 @@ origins = [
     "http://193.37.71.240"
 ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-    max_size=2097152,
-)
+middleware = [
+    Middleware(
+        CORSMiddleware,
+        allow_origins=['*'],
+        allow_credentials=True,
+        allow_methods=['*'],
+        allow_headers=['*'],
+        max_size=2097152,
+    )
+]
+# app = FastAPI()
+app = FastAPI(middleware=middleware)
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+#     max_size=2097152,
+# )
 
 
 

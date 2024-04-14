@@ -23,7 +23,7 @@ jobs:
              mkdir -p $PROJECT_DIR 
              cd $PROJECT_DIR 
   
-             [ "$(echo *)x" != '*x' ] || [ "$(echo .[^.]*)x" != ".[^.]*x" ] || git clone git@github.com:/${PROJECT_NAME}/${REPO_NAME} . 
+             [ "$(echo *)x" != '*x' ] || [ "$(echo .[^.]*)x" != ".[^.]*x" ] || git clone https://github.com/${PROJECT_NAME}/${REPO_NAME}.git/ . 
              git checkout ${PROJECT_SCOPE} 
              git pull origin ${PROJECT_SCOPE} 
   

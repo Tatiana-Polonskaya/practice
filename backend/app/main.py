@@ -32,8 +32,7 @@ middleware = [
         allow_origins=['*'],
         allow_credentials=True,
         allow_methods=['*'],
-        allow_headers=['*'],
-        max_size=2097152,
+        allow_headers=['*']
     )
 ]
 # app = FastAPI()

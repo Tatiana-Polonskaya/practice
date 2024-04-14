@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      context: ./backend/
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "127.0.0.1:3000:3000"
+    expose:
+      - 3000
+
+  frontend:
+    build:
+      context: ./frontend/
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "127.0.0.1:80:80"
+    expose:
+      - 80

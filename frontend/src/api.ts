@@ -1,4 +1,4 @@
-export const BASE_URL = "http://193.37.71.240:3010";
+export const BASE_URL = "http://193.37.71.240";
 
 const headers = { "Content-Type": "application/json; charset=utf-8" };
 

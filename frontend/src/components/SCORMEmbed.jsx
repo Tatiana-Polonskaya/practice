@@ -16,7 +16,7 @@ const SCORMEmbed = (props) => {
     const time = end - start;
     if (!timeLoaded) {
       const respone = async () => {
-        const res = await putScorm(props.scorm.id, String(time).split(0,3));
+        const res = await putScorm(props.scorm.id, time);
       };
       respone();
     }

@@ -1,0 +1,38 @@
+name: Deploy 
+run-name: Deploy to ${{ github.ref_name }} by @${{ github.actor }} 
+on: workflow_dispatch 
+
+jobs: 
+   deploy: 
+     runs-on: ubuntu-latest 
+     steps: 
+       - name: restart everything 
+         uses: appleboy/ssh-action@master 
+         with: 
+           host: ${{ secrets.DEPLOY_HOST }} 
+           username: ${{ secrets.DEPLOY_USER }} 
+           password: ${{ secrets.DEPLOY_PASSWORD }} 
+           script: | 
+             PROJECT_NAME=${{ github.event.organization.login }} 
+             PROJECT_NAME=${PROJECT_NAME,,}  # to lowercase 
+             REPO_NAME=${{ github.event.repository.name }} 
+             PROJECT_SCOPE=${{ github.ref_name }} 
+             PROJECT_FULLNAME=${PROJECT_NAME}-${PROJECT_SCOPE} 
+             PROJECT_DIR=~/deploy/${PROJECT_SCOPE} 
+  
+             mkdir -p $PROJECT_DIR 
+             cd $PROJECT_DIR 
+  
+             [ "$(echo *)x" != '*x' ] || [ "$(echo .[^.]*)x" != ".[^.]*x" ] || git clone git@github.com:/${PROJECT_NAME}/${REPO_NAME} . 
+             git checkout ${PROJECT_SCOPE} 
+             git pull origin ${PROJECT_SCOPE} 
+  
+  
+             echo "${{ secrets.DOCKER_ACCESS_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin 
+             docker-compose -p ${PROJECT_FULLNAME} pull || true 
+             yes | docker container prune 
+             yes | docker image prune 
+             docker-compose -p ${PROJECT_FULLNAME} --env-file .env up -d 
+             docker-compose -p ${PROJECT_FULLNAME} restart nginx 
+             sleep 1 
+             docker-compose -p ${PROJECT_FULLNAME} ps

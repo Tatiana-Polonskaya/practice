@@ -32,7 +32,7 @@ export async function putScorm(id: string, time_render: string) {
   const response = await fetch(`${BASE_URL}/scorm/${id}`, {
     method: "PUT",
     headers: headers,
-    body: JSON.stringify({ scorm_id: id, time_render }),
+    body: JSON.stringify({ scorm_id: id, time_render:time_render }),
   });
   return response;
 }

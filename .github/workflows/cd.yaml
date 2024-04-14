@@ -23,7 +23,7 @@ jobs:
              mkdir -p $PROJECT_DIR 
              cd $PROJECT_DIR 
   
-             [ "$(echo *)x" != '*x' ] || [ "$(echo .[^.]*)x" != ".[^.]*x" ] || git clone https://github.com/${PROJECT_NAME}/${REPO_NAME}.git/ . 
+             [ "$(echo *)x" != '*x' ] || [ "$(echo .[^.]*)x" != ".[^.]*x" ] || git clone git@github.com:/${PROJECT_NAME}/${REPO_NAME} . 
              git checkout ${PROJECT_SCOPE} 
              git pull origin ${PROJECT_SCOPE} 
   
@@ -32,7 +32,6 @@ jobs:
              docker-compose -p ${PROJECT_FULLNAME} pull || true 
              yes | docker container prune 
              yes | docker image prune 
-             docker-compose -p ${PROJECT_FULLNAME} --env-file .env up -d 
-             docker-compose -p ${PROJECT_FULLNAME} restart nginx 
+             docker-compose -p ${PROJECT_FULLNAME} up -d 
              sleep 1 
              docker-compose -p ${PROJECT_FULLNAME} ps

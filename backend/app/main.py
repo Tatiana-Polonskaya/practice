@@ -21,9 +21,7 @@ origins = [
     "http://5.159.101.177:80",
     "http://localhost:80",
     "https://localhost:80",
-    "https://tatiana-polonskaya.github.io/",
-    "https://tatiana-polonskaya.github.io/react-tracking-scorm"
-    "https://tatiana-polonskaya.github.io/react-tracking-scorm/"
+    "http://193.37.71.240:80"
 ]
 
 app.add_middleware(

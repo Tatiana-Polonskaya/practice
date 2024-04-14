@@ -18,6 +18,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost",
+    "http://5.159.101.177:80",
     "http://localhost:80",
     "https://localhost:80",
     "https://tatiana-polonskaya.github.io/",
